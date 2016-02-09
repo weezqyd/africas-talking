@@ -6,10 +6,10 @@ require __DIR__.'/vendor/autoload.php';
         
         
         // An Array of recipients
-        $recipients[] = '0000000000000';
+        $recipients=['0729422001','0727038269'];
         // Initialize The Africas Talking Api
         $gateway = new HttpClient();
-        $message='nice one a message send through the awesome sematime api';
+        $message='nice one a message send through the awesome Africas Talking API';
             $results = $gateway->sendMessage($recipients, $message);
             isset($results) ? $response = $results : $response = 'An Error Was Encoutered';
             

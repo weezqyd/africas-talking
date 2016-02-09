@@ -1,7 +1,7 @@
 <?php
 namespace Weezqyd\Api;
 
-use Weezqyd\Api\Exception\SematimeAPIException;
+use Weezqyd\Api\Exception\AfricasTalkingAPIException;
 use Dotenv\Dotenv;
 /**
 * 
@@ -38,11 +38,11 @@ class AfricasTalking
     {
         $dotenv = new Dotenv(realpath(__DIR__.'/../../'));
         $dotenv->load();
-        $this->_apiKey=getenv('AT_API_KEY');
-        $this->_username=getenv('AT_USERNAME');
+        $this->_apiKey=getenv('API_KEY');
+        $this->_username=getenv('USERNAME');
     	if(strlen($this->_apiKey) == 0 || strlen($this->_username)==0)
     	{
-    		print SematimeAPIException::noCredentials();
+    		print AfricasTalkingAPIException::noCredentials();
             exit;
     		//var_dump($this);
     		
