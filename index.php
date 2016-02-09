@@ -1,13 +1,13 @@
 <?php
-namespace Sematime;
+namespace Weezqyd;
 
 require __DIR__.'/vendor/autoload.php';
-        use Sematime\Api\HttpClient;
+        use Weezqyd\Api\HttpClient;
         
         
         // An Array of recipients
         $recipients[] = '0000000000000';
-        // Initialize The Sematime Api
+        // Initialize The Africas Talking Api
         $gateway = new HttpClient();
         $message='nice one a message send through the awesome sematime api';
             $results = $gateway->sendMessage($recipients, $message);

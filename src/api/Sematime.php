@@ -1,12 +1,12 @@
 <?php
-namespace Sematime\Api;
+namespace Weezqyd\Api;
 
-use Sematime\Api\Exception\SematimeAPIException;
+use Weezqyd\Api\Exception\SematimeAPIException;
 use Dotenv\Dotenv;
 /**
 * 
 */
-class Sematime
+class AfricasTalking
 {
 	
 	public $_apiKey ;

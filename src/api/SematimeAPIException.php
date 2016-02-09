@@ -1,9 +1,9 @@
 <?php
-namespace Sematime\Api\Exception;
+namespace Weezqyd\Api\Exception;
 
 use Exception;
 
-class SematimeAPIException extends Exception
+class AfricasTalkingAPIException extends Exception
 {
     function noConnection()
     {

@@ -1,12 +1,12 @@
 <?php
-namespace Sematime\Api;
+namespace Weezqyd\Api;
 
 use Httpful\Request;
 use Httpful\Mime;
 use Httpful\Http;
-use Sematime\Api\Sematime;
+use Weezqyd\Api\AfricasTalking;
 
-Class HttpClient extends Sematime // implements HttpClientInterface
+Class HttpClient extends AfricasTalking // implements HttpClientInterface
 {
 	public $init;
 
