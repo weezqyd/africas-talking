@@ -10,13 +10,13 @@ class Sematime
 {
 	
 	public $_apiKey ;
-    public $_userid ;
+    public $_username ;
     public $_requestBody;
     public $_requestUrl;
     public $_responseBody;
     public $_responseInfo;
 
-    public $SMS_URL = "https://api.sematime.com/v1/{userId}/messages";
+    public $SMS_URL = "https://api.africastalking.com/version1/messaging";
     public $URL = "https://api.sematime.com/v1/{userId}";
 
     public $OK = 200;
@@ -38,9 +38,9 @@ class Sematime
     {
         $dotenv = new Dotenv(realpath(__DIR__.'/../../'));
         $dotenv->load();
-        $this->_apiKey=getenv('API_KEY');
-        $this->_userid=getenv('USER_ID');
-    	if(strlen($this->_apiKey) == 0 || strlen($this->_userid)==0)
+        $this->_apiKey=getenv('AT_API_KEY');
+        $this->_username=getenv('AT_USERNAME');
+    	if(strlen($this->_apiKey) == 0 || strlen($this->_username)==0)
     	{
     		print SematimeAPIException::noCredentials();
             exit;

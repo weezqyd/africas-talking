@@ -20,16 +20,18 @@ Class HttpClient extends Sematime // implements HttpClientInterface
 	{
 		$this->init = Request::init()
 	    ->withoutStrictSsl()        // Ease up on some of the SSL checks
-		->addHeaders(['content-type'=>Mime::JSON,'apikey'=>$this->_apiKey]);
+		->addHeaders(['content-type'=>Mime::FORM,'apikey'=>$this->_apiKey,'Accept'=>'']);
  		return Request::ini($this->init);
 	}
 	public function sendMessage($to, $message, $options='')
 	{
-		$this->_responseBody=$this->jsonEncode([
+		$params=[
+						'username' => $this->_username,
 						'message'    => $message,
-		            	'recipients' => implode(',',$to),
-					   ]);
-		$this->_requestUrl = str_replace('{userId}', $this->_userid, $this->SMS_URL);
+		            	'to' => implode(',',$to),
+					   ];
+		$this->_responseBody=http_build_query($params, '', '&');
+		$this->_requestUrl = $this->SMS_URL;
 		$this->response=$this->init->post($this->_requestUrl )->body($this->_responseBody)->send();
 		return $this->response ;
 		//var_dump($this);

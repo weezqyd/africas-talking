@@ -6,7 +6,7 @@ require __DIR__.'/vendor/autoload.php';
         
         
         // An Array of recipients
-        $recipients[] = '1234567890';
+        $recipients[] = '0000000000000';
         // Initialize The Sematime Api
         $gateway = new HttpClient();
         $message='nice one a message send through the awesome sematime api';
