@@ -9,8 +9,8 @@ require __DIR__.'/vendor/autoload.php';
         // An Array of recipients
         $recipients[] = '123456789';
         // Initialize The Sematime Api
-        $gateway = new SematimeAPI();
-        $message='A nice message send using Sematime';
+        $gateway = new HttpClient();
+        $message='A nice message send using Africas Talking';
        
         $results = $gateway->sendMessage($recipients, $message);
         echo $results;
