@@ -1,5 +1,5 @@
 # Africas talking Api gateway for php 
-A composer script for sending messages through Africa's talking API
+A php script for sending messages through Africa's talking API
 
 Send a message
 ```php
