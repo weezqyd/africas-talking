@@ -68,8 +68,7 @@ The SMS API accept additional options to be passed allong with the request
 | linkId               	| This parameter is used for premium services to send OnDemand messages. We forward the linkId to your application when the user send a message to your service                                                                                                            	|
 | retryDurationInHours 	| This parameter is used for premium messages. It specifies the number of hours your subscription message should be retried in case it's not delivered to the subscriber.                                                                                                  	|
 
-
-** Send with options **
+ *Send with options*
 
 ```php
 use Http\Exceptions\HttpException;
