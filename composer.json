@@ -1,25 +1,34 @@
 {
-    "name": "weezqyd/sematime",
-    "description": "Sematime API Gateway",
-    "type": "extension",
-    "license": "MIT",
-    "version": "1.0.0",
+
+	 "name": "weezqyd/africastalking",
+    "description": "PHP Api gateway for AfricasTalking",
+    "type": "library",
+    "license": "mit",
     "authors": [
         {
-            "name": "weezqyd",
+            "name": "Master Weez",
             "email": "wizqydy@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": 
-    {
-        "php": ">=5.5.9",
-        "vlucas/phpdotenv": "^2.1",
-        "nategood/httpful":"*"
+    "require": {
+        "weezqyd/http-adapters": "^0.0.1",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.1"
     },
     "autoload": {
         "psr-4": {
-            "Weezqyd\\":"src/"
+            "AfricasTalking\\": "src/"
         }
-    }
+    },
+    "scripts":{
+        "phpunit":"vendor/bin/phpunit"
+    },
+     "autoload-dev": {
+        "psr-4": {
+            "AfricasTalking\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
 }
