@@ -2,6 +2,8 @@
 
 namespace AfricasTalking\Api;
 
+use Closure;
+
 class Airtime extends AbstractApi
 {
     /**
@@ -11,10 +13,12 @@ class Airtime extends AbstractApi
      *
      * @return  [description]
      */
-    public function sendAirtime($recipients, Closure $callback = null)
+    public function send($recipients, Closure $callback = null)
     {
-
-        $response = $this->client->post(sprintf('%s/airtime/send', $this->apiEndpoint), $this->options);
+        $this->formatRecipients($recipients);
+        $response = $this->client->post(sprintf('%s/airtime/send', $this->apiEndpoint), http_build_query($this->options));
+        $response = json_decode($response);
+        return $this->runCallbacks($response->responses, $callback);
     }
 
     /**

@@ -26,13 +26,13 @@ class Sms extends AbstractApi
         return $this->runCallbacks($recipients, $callback);
     }
 
-    public function fetchMessages($lastReceivedId = '', Closure $callback = null)
+    public function fetchMessages($lastReceivedId = 0, Closure $callback = null)
     {
-        $this->options(compact('lastReceivedId'));
-        $response = $this->client->get(sprintf('%s/messages?%s', $this->apiEndpoint, http_build_query($this->options)));
+        $this->options(['lastReceivedId'=> $lastReceivedId]);
+        $response = $this->client->get(sprintf('%s/messaging?%s', $this->apiEndpoint, http_build_query($this->options)));
         $response = json_decode($response, false);
         $messages = $response->SMSMessageData->Messages;
         
-        return $this->runCallbacks($recipient, $callback);
+        return $this->runCallbacks($messages, $callback);
     }
 }

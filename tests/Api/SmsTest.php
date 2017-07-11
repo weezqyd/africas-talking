@@ -6,14 +6,12 @@ use AfricasTalking\Tests\TestCase;
 
 class SmsTest extends TestCase
 {
-
     protected $sms;
 
     /**
-     * Test that a message can be sent
+     * Test that a message can be sent.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
-     *
      **/
     public function testSendMessage()
     {
@@ -22,10 +20,9 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Test that a message can be sent to multiple Recipients
+     * Test that a message can be sent to multiple Recipients.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
-     *
      **/
     public function testSendMessageToMultipleRecipients()
     {
@@ -35,7 +32,7 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Set Sms property for evry test
+     * Set Sms property for evry test.
      *
      * @covers \AfricassTalking\Apj\AbstractApi::__construct
      * @covers \AfricassTalking\Gateway::__construct
@@ -50,10 +47,9 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Test that a message is sent with options
+     * Test that a message is sent with options.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
-     *
      **/
     public function testSendMessageWithOptions()
     {
@@ -62,11 +58,10 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Test that a message is sent with options and a callback
+     * Test that a message is sent with options and a callback.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
      * @depends testSendMessageWithOptions
-     *
      **/
     public function testSendMessageWithOptionsAndCallback()
     {
@@ -76,12 +71,11 @@ class SmsTest extends TestCase
         $response = $this->sms->sendMessage('+254700123456', 'test SendMessage', ['from' => '22123', 'enqueue' => '1'], $callback);
     }
 
-     /**
-     * Test that it should fail with invalid number
+    /**
+     * Test that it should fail with invalid number.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
      * @depends testSendMessageWithOptionsAndCallback
-     *
      **/
     public function testSendMessageFailsWithInvalidNumber()
     {
@@ -92,12 +86,27 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Test that it should fail with empty message
+     * Test that it should fail with invalid number.
+     *
+     * @covers \AfricasTalking\Api\Sms::fetchMessages
+     **/
+    public function testShouldFetchMessages()
+    {
+        $callback = function ($message) {
+            return array_map(function ($attribute) use ($message) {
+                return $this->assertObjectHasAttribute($attribute, $message);
+            }, ['to', 'id', 'message', 'date']);
+        };
+        $this->sms->fetchMessages(0, $callback);
+        $this->assertEquals($this->sms->client->getStatusCode(), 200);
+    }
+
+    /**
+     * Test that it should fail with empty message.
      *
      * @covers \AfricasTalking\Api\Sms::sendMessage
      * @depends testSendMessageWithOptionsAndCallback
-     * @expectedException Http\Exceptions\HttpException
-     *
+     * @expectedException \Http\Exceptions\HttpException
      **/
     public function testSendMessageFailsWithEmptyMessage()
     {
@@ -105,14 +114,14 @@ class SmsTest extends TestCase
     }
 
     /**
-     * Assert that messages were send
+     * Assert that messages were send.
      *
      * @return object
      **/
     protected function runCallback($response)
     {
         return array_map(function ($recipient) {
-             return $this->assertEquals($recipient->status, 'Success');
+            return $this->assertEquals($recipient->status, 'Success');
         }, $response);
     }
 }
