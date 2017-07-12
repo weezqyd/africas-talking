@@ -3,6 +3,7 @@
 namespace AfricasTalking;
 
 use Http\Exceptions;
+use Http\Adapter\GuzzleHttpAdapter;
 use Http\Adapter\AdapterInterface as Client;
 
 class Gateway

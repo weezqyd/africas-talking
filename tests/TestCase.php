@@ -12,6 +12,6 @@ abstract class TestCase extends PHPUnit
 
     public function setUp()
     {
-        $this->atsms = new Gateway($_ENV['USERNAME'], $_ENV['API_KEY'], true);
+        $this->atsms = new Gateway(getEnv('USERNAME'), getEnv('API_KEY'), true);
     }
 }

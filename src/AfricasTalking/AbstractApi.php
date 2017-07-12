@@ -43,13 +43,13 @@ abstract class AbstractApi
     }
 
     /**
-     * Set the senders number globally.
+     * Get the Http adapter
      *
-     * @param string $from
+     * @return  \Http\Adapter\AdapterInterface
      */
-    public static function from($from)
+    public function getClient()
     {
-        static::$from = $from;
+        return $this->client;
     }
 
     /**

@@ -98,7 +98,7 @@ class SmsTest extends TestCase
             }, ['to', 'id', 'message', 'date']);
         };
         $this->sms->fetchMessages(0, $callback);
-        $this->assertEquals($this->sms->client->getStatusCode(), 200);
+        $this->assertEquals($this->sms->getClient()->response->getStatusCode(), 200);
     }
 
     /**
