@@ -53,7 +53,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Build request options.
+     * Build request parameters.
      *
      * @param array $options [description]
      */

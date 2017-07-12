@@ -2,31 +2,21 @@
 
 namespace AfricasTalking\Api;
 
+use Closure;
 
 class Voice extends AbstractApi
 {
    
-    public function call($from, $to)
+    public function call($from, $to, Closure $callback)
     {
-        if (strlen($from) == 0 || strlen($to) == 0) {
-            throw new InvalidArgumentException('Please supply both from and to parameters');
-        }
+        $this->options(compact('from', 'to'));
+        $body = http_build_query($this->options);
+        $response = $this->client->post(sprintf('%s/call', $this->voiceEndpoint), $body);
 
-        $params = [
-                'username' => $this->username,
-                'from' => $from,
-                'to' => $to,
-                ];
-
-        $this->requestUrl = self::VOICE_URL.'/call';
-        $this->requestBody = http_build_query($params, '', '&');
-
-        $this->method = 'POST';
-
-        return $this->send();
+        return $this->runCallbacks($response, $callback);
     }
 
-    public function getNumQueuedCalls($phoneNumber, $queueName = null)
+    public function queuedCalls($phoneNumber, $queueName = null)
     {
         $this->requestUrl = self::VOICE_URL.'/queueStatus';
         $params = [
@@ -40,5 +30,4 @@ class Voice extends AbstractApi
 
         return $this->send();
     }
-
 }

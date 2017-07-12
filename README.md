@@ -1,56 +1,55 @@
-# Africas talking Api gateway for PHP
-
-A composer driven package for sending  for sending messages through Africa's talking API
 
 Geting Started
 --------------
 Install the package from composer
 ```bash
-$ composer require weezqyd/africastalking
+$ composer require weezqyd/africastalking @dev
 ```
-You then need to install **one** of the following: But we recoment GuzzleHttp
+You then need to install **one** of the following: But we recomend GuzzleHttp
 ```bash
-$ composer require kriswallsmith/buzz:~0.10
-$ composer require guzzlehttp/guzzle:~5.0
-$ composer require guzzlehttp/guzzle:~6.0
+$ composer require guzzlehttp/guzzle
+$ composer require kriswallsmith/buzz
+$ composer require nategood/httpful
 ```
 Configure the Adapter
 ---------------------
-If you use Guzzle, just pass an array of options to the constructor of `Http\Adapter\GuzzleAdapter`.
-Please refer to [Guzzle Documentation](http://docs.guzzlephp.org/en/stable/request-options.html). for a full list of possible options
+This package uses guzzlehttp as the default adapter, if you decide to use another http client good for you all you need is to configure your client and pass the adapter as the fourth parameter to the gateway's constructor. You can also create your own adapter as long as it implements `Http\Adapter\AdapterInterface`.
 
-You can add the adapter setup ro a bootstrap file or pass it as a service to your IOC Container
+
+An example is worth a thousand words
 
 ```php
 require_once 'vendor/autoload.php';
 
 use AfricasTalking\Gateway;
-use Http\Adapter\GuzzleHttpAdapter;
+use Http\Adapter\BuzzAdapter;
 
 // These Headers are required
-$options = ['headers' => 
-				[
-                    'apiKey' => 'API-KEY',
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/x-www-form-urlencoded',
-                ],
-            ];
-$adapter = new GuzzleHttpAdapter($options);
+$headers = [
+        'apiKey' => 'API-KEY',
+        'Accept' => 'application/json',
+        'Content-Type' => 'application/x-www-form-urlencoded',
+    ];
+$adapter = new BuzzAdapter($headers);
 // Pass the adapter and your Africastalking Username to the gateway 
 // The third parameter is a sandbox flag when true the Api wiil run in the sandbox, The defaults is false
-$gateway = new Gateway($adapter, 'USERNAME', true);
+// Because we are using a custom client you dont need provide the API KEY to the gateway
+// Instead pass an empty string or null
+$gateway = new Gateway('USERNAME', null, true, $adapter);
         
  ```
  
 ### Sending an SMS Message
 
-With everything set up now sending an SMS is as simple as
+Now let us send an SMS notification 
 
 ```php
+use AfricasTalking\Gateway;
 use Http\Exceptions\HttpException;
-// ..... Rest of adapter setup
+
+$gateway = new Gateway('API-TOKEN', 'USERNAME');
 try {
-	$response = $gateway->sms->sendMessage('+254700123456', 'My sample message');
+	$response = $gateway->sms->sendMessage('+254700123XXX', 'My sample message');
 	var_dump($response);
 } catch(HttpException $e) {
 	print_r($e);
