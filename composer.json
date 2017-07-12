@@ -13,7 +13,7 @@
         "weezqyd/http-adapters": "^0.0.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.1",
+        "phpunit/phpunit": "~5.1|~6.1",
         "guzzlehttp/guzzle": "^6.3",
         "kriswallsmith/buzz": "~0.10"
     },
