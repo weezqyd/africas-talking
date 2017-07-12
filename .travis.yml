@@ -1,0 +1,26 @@
+language: php
+php:
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - '7.1'
+env:
+  global:
+    - setup=basic
+    - secure: AHOc/Bl7Cxr7PecJSECA2+PigBF/ClQll0l7lqj5kCcr5Q7HMm8RGXmKGsk4cXQuuvvsJtRYPVBu+ZZ2BtsNRIqBDGE4EUSTeXVPymYTNOGmcSA2BAQXtrC1BnNgScbIp4aJrwLfUVU3Ps9NAqjAuwXsdNrWoX9z+Yseu9H9a9Wqr5L+HibRSPXd3YnjpiLYgfiVl1K7WQmL7GM344S2T/bDkbQpmmNhFv1c/L7NTfL8M3X/IlFnkdi4cRChRyF37j3kVhFFLCd54qWJZ2+Ueh59IkiFutZ8zzI2SfOjszGSBvuyuLE305j9zOqYW16Snc+StQnAfao7juV4jeKKkPHwlzkC4suhc6SGX8nBND3paTAUmJ77LIE+VQ+JFeF3/0xtRRl7Fe/DQO1OrzjxlhoCcFgvgx2tzLkUZnq93LW+eu3K3duH06bE/PnLHxhvPbi2+S7yN2cKmXLk23OjGALQ5v3SkWJ5WD0IisJE3KV7WEIHGrUxlE12KKM0aLBBKWvmyDhOvDwQLRZOQfX1YChzYJnITOhObQH05QPgSURwJzadVGN5YtnFMMTOTiJKTTM1rvYa53A1vpM9LbOQWUeGzZOjXtsfjM9aq6FI6t5H4IwqXYSOLY+SgPd5+A2eSBLxYO6oVvDErJh4KjZPAMxGpPd+Cn0iM7MdArRMISw=
+
+matrix:
+  fast_finish: true
+
+sudo: false
+
+dist: xenial
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
