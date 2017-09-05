@@ -71,7 +71,7 @@ abstract class AbstractApi
      **/
     protected function runCallbacks($payload, $callback)
     {
-        if (is_callable($callback)) {
+        if (is_callable($callback) && is_array($payload)) {
             return array_map(function ($item) use ($callback) {
                 return $callback($item);
             }, $payload);

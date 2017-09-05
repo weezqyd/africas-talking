@@ -2,54 +2,44 @@
 
 namespace AfricasTalking\Api;
 
+use Closure;
+use Http\Exceptions\ErrorException;
+
 class Subscriptions extends AbstractApi
 {
-    public function createSubscription($phoneNumber, $shortCode, $keyword)
+    public function createSubscription($phoneNumber, $shortCode, $keyword, $checkoutToken = null)
     {
-        if (strlen($phoneNumber) == 0 || strlen($shortCode) == 0 || strlen($keyword) == 0) {
-            throw new InvalidArgumentException('Please supply phoneNumber, shortCode and keyword');
-        }
+        $checkoutToken = $this->token($phoneNumber);
 
-        $params = [
-                'username' => $this->username,
-                'phoneNumber' => $phoneNumber,
-                'shortCode' => $shortCode,
-                'keyword' => $keyword,
-                ];
-        $this->method = 'POST';
-        $this->requestUrl = self::SUBSCRIPTION_URL.'/create';
-        $this->requestBody = http_build_query($params, '', '&');
-
-        return $this->send();
+        $this->options(compact('checkoutToken', 'phoneNumber', 'shortCode', 'keyword'));
+        $response = $this->client->post(sprintf('%s/subscriptions/create', $this->apiEnpoint), http_build_query($this->options));
+        return json_decode($response);
     }
 
     public function deleteSubscription($phoneNumber, $shortCode, $keyword)
     {
-        if (strlen($phoneNumber) == 0 || strlen($shortCode) == 0 || strlen($keyword) == 0) {
-            throw new InvalidArgumentException('Please supply phoneNumber, shortCode and keyword');
-        }
-
-        $params = [
-                'username' => $this->username,
-                'phoneNumber' => $phoneNumber,
-                'shortCode' => $shortCode,
-                'keyword' => $keyword,
-                ];
-
-        $this->requestUrl = self::SUBSCRIPTION_URL.'/delete';
-        $this->requestBody = http_build_query($params, '', '&');
-
-        $this->method = 'POST';
-
-        return $this->send();
+        $this->options(compact('phoneNumber', 'shortCode', 'keyword'));
+        $body = http_build_query($this->options, '', '&');
+        $response = $this->client->post(sprintf('%s/subscriptions/delete', $this->apiEnpoint), $body);
     }
 
-    public function fetchPremiumSubscriptions($shortCode, $keyword, $lastReceivedId = 0)
+    public function fetchPremiumSubscriptions($shortCode, $keyword, $lastReceivedId = 0, Closure $callback = null)
     {
         $username = $this->username;
-        $this->requestUrl = self::SUBSCRIPTION_URL.'?username='.$username.'&shortCode='.$shortCode;
-        $this->requestUrl .= '&keyword='.$keyword.'&lastReceivedId='.intval($lastReceivedId);
+        $this->options(compact('lastReceivedId', 'shortCode', 'keyword'));
+        $query = http_build_query($this->options);
+        $response = $this->client->get(sprintf('%s/subscriptions?%s', $this->apiEnpoint, $query));
 
-        return $this->send();
+        return $this->runCallbacks($response->responses, $callback);
+    }
+
+    public function token($phoneNumber)
+    {
+        $response = $this->client->post('https://api.africastalking.com/checkout/token/create', http_build_query(compact('phoneNumber')));
+        $response = json_decode($response);
+        if ($response->description === 'Success') {
+            return $response->token;
+        }
+        throw new ErrorException($response->description);
     }
 }
