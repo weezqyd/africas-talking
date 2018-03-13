@@ -15,7 +15,7 @@ class SmsTest extends TestCase
      **/
     public function testSendMessage()
     {
-        $response = $this->sms->sendMessage('+254700123456', 'testSendMessage');
+        $response = $this->sms->sendMessage('+254700123456', 'send a plain message');
         $this->runCallback($response);
     }
 
@@ -27,7 +27,7 @@ class SmsTest extends TestCase
     public function testSendMessageToMultipleRecipients()
     {
         $recipients = ['+254700123123', '+254700123987', '+254700123400', '+254700123222'];
-        $response = $this->sms->sendMessage($recipients, 'testSendMessage');
+        $response = $this->sms->sendMessage($recipients, 'test send message to multiple recipients');
         $this->runCallback($response);
     }
 
@@ -53,7 +53,7 @@ class SmsTest extends TestCase
      **/
     public function testSendMessageWithOptions()
     {
-        $response = $this->sms->sendMessage('+254700123456', 'test SendMessage', ['from' => '22123', 'enqueue' => '1']);
+        $response = $this->sms->sendMessage('+254700123456', 'test Send message with options', ['from' => '22123', 'enqueue' => '1']);
         $this->runCallback($response);
     }
 
@@ -68,7 +68,7 @@ class SmsTest extends TestCase
         $callback = function ($recipient) {
             return $this->assertEquals($recipient->status, 'Success');
         };
-        $response = $this->sms->sendMessage('+254700123456', 'test SendMessage', ['from' => '22123', 'enqueue' => '1'], $callback);
+        $response = $this->sms->sendMessage('+254700123456', 'test Send message with options and a callback', ['from' => '22123', 'enqueue' => '1'], $callback);
     }
 
     /**

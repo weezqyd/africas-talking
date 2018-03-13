@@ -27,7 +27,21 @@ class Gateway
      * @var \Http\Adapter\AdapterInterface
      */
     protected $client;
+    /**
+     * Additional  adapter options.
+     *
+     * @var array
+     */
+    public static $options = [];
 
+    /**
+     * Instantiate the gateway and inject the HTTP Adapter.
+     *
+     * @param string      $username [description]
+     * @param string      $token    [description]
+     * @param bool|bool   $sandbox  [description]
+     * @param Client|null $adapter  [description]
+     */
     public function __construct($username, $token, bool $sandbox = false, Client $adapter = null)
     {
         $this->username = $username;
@@ -81,12 +95,13 @@ class Gateway
      **/
     protected function createGuzzleAdapter($token)
     {
-        $options = ['headers' => [
+        $default = ['headers' => [
                         'apikey' => $token,
                         'Accept' => 'application/json',
                         'Content-Type' => 'application/x-www-form-urlencoded',
                     ],
                 ];
+        $options = array_merge($default, static::$options);
         $adapter = new GuzzleHttpAdapter($options);
         $this->setClient($adapter);
     }

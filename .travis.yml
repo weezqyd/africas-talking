@@ -1,8 +1,5 @@
 dist: trusty
-sudo: required
-before_install:
-  - sudo apt-get update
-  - sudo apt-get -y install git zip php-cli php-curl
+sudo: false
 language: php
 php:
 - '5.6'
