@@ -3,7 +3,6 @@
 namespace AfricasTalking\Tests;
 
 use AfricasTalking\Gateway;
-use Http\Adapter\GuzzleHttpAdapter;
 use PHPUnit\Framework\TestCase as PHPUnit;
 
 abstract class TestCase extends PHPUnit
@@ -12,6 +11,6 @@ abstract class TestCase extends PHPUnit
 
     public function setUp()
     {
-        $this->atsms = new Gateway(getEnv('USERNAME'), getEnv('API_KEY'), true);
+        $this->atsms = new Gateway(getenv('AT_USERNAME'), getenv('API_KEY'), true);
     }
 }

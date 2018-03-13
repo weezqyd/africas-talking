@@ -19,7 +19,7 @@ class Sms extends AbstractApi
             }
         }
         $this->options(array_merge($options, $params));
-        $response = $this->client->post(sprintf('%s/messaging', $this->apiEndpoint), http_build_query($this->options));
+        $response = $this->client->post(sprintf('%s/messaging', $this->apiEndpoint), http_build_query($this->options, '', '&'));
         $response = json_decode($response, false);
         $recipients = $response->SMSMessageData->Recipients;
 
@@ -28,11 +28,11 @@ class Sms extends AbstractApi
 
     public function fetchMessages($lastReceivedId = 0, Closure $callback = null)
     {
-        $this->options(['lastReceivedId'=> $lastReceivedId]);
+        $this->options(['lastReceivedId' => $lastReceivedId]);
         $response = $this->client->get(sprintf('%s/messaging?%s', $this->apiEndpoint, http_build_query($this->options)));
         $response = json_decode($response, false);
         $messages = $response->SMSMessageData->Messages;
-        
+
         return $this->runCallbacks($messages, $callback);
     }
 }

@@ -82,7 +82,7 @@ class Gateway
     protected function createGuzzleAdapter($token)
     {
         $options = ['headers' => [
-                        'apiKey' => $token,
+                        'apikey' => $token,
                         'Accept' => 'application/json',
                         'Content-Type' => 'application/x-www-form-urlencoded',
                     ],

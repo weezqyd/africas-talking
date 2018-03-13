@@ -16,4 +16,8 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+     <php>
+        <env name="API_KEY" value="4ff81f0541c992cb13f2970ddbf5ca134bca274b4b450859fdafcf3d9d25dd10"/>
+        <env name="AT_USERNAME" value="sandbox"/>
+    </php>
 </phpunit>
