@@ -42,7 +42,7 @@ class Gateway
      * @param bool|bool   $sandbox  [description]
      * @param Client|null $adapter  [description]
      */
-    public function __construct($username, $token, bool $sandbox = false, Client $adapter = null)
+    public function __construct($username, $token, $sandbox = false, Client $adapter = null)
     {
         $this->username = $username;
         $this->sandbox = $sandbox;
