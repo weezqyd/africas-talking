@@ -26,7 +26,7 @@ use Http\Adapter\BuzzAdapter;
 
 // These Headers are required
 $headers = [
-        'apiKey' => 'API-KEY',
+        'apikey' => 'API-KEY',
         'Accept' => 'application/json',
         'Content-Type' => 'application/x-www-form-urlencoded',
     ];
