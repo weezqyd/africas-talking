@@ -44,7 +44,7 @@ class Gateway
      */
     public function __construct($username, $token, $sandbox = false, Client $adapter = null)
     {
-        $this->username = $username;
+        $this->username = $sandbox ? 'sandbox' : $username;
         $this->sandbox = $sandbox;
         $this->createAdapter($adapter, $token);
     }
